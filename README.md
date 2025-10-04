@@ -43,8 +43,12 @@ PokéStats/
 ├── package.json
 └── README.md
 This separation of concerns keeps the app maintainable and scalable: components handle display, utilities handle computation, and hooks manage stateful logic.
+```
 
-Features
+---
+
+## Features
+
 Fetches Pokémon data dynamically from the PokéAPI.
 
 Applies a Kalman filter to smooth noisy stat data.
@@ -58,43 +62,48 @@ Allows filtering and searching by Pokémon type.
 Prerequisites
 Please install:
 
+```bash
 Node.js (v18 or higher)
 
 npm or Yarn
 
 Git
-
+```
 Verify installations:
 
-bash
+```bash
 Code kopieren
 node -v
 npm -v
 git --version
 Installation & Running Locally
 Clone the repository:
+```
 
-bash
+```bash
 Code kopieren
 git clone https://github.com/yourusername/pokestats.git
 cd pokestats
 Install dependencies:
+```
 
-bash
+```bash
 Code kopieren
 npm install
 # or
 yarn
 Start the development server:
+```
 
-bash
+```bash
 Code kopieren
 npm start
 # or
 yarn start
 Build for production:
+```
 
-bash
+```bash
 Code kopieren
 npm run build
 # or
@@ -103,13 +112,20 @@ The app will run locally at http://localhost:3000.
 
 Testing
 If tests are added, run them with:
+```
 
-bash
+```bash
+
 Code kopieren
 npm test
 # or
 yarn test
-How It Works
+```
+
+---
+
+## How It Works
+
 PokéAPI Integration
 The app fetches data directly from the PokéAPI, extracting key attributes such as attack, defense, speed, and type. These values feed the visualization components.
 
@@ -122,7 +138,10 @@ Pokémon are grouped using the k-means clustering algorithm based on selected at
 Visualization
 The project uses Recharts for interactive data visualization (e.g., radar and bar charts). Data flow: API → transformation → clustering → visualization components.
 
-Tradeoffs and Limitations
+---
+
+## Tradeoffs and Limitations
+
 PokéAPI rate limits can slow large fetches.
 
 The Kalman filter assumes consistent sampling intervals, which may not perfectly match API realities.
@@ -131,7 +150,9 @@ Clustering quality depends on feature selection and scaling.
 
 Client-only app; there is no backend persistence.
 
-Future Improvements
+---
+
+## Future Improvements
 Cache API responses for better performance.
 
 Add alternative clustering methods (e.g., DBSCAN).
@@ -140,5 +161,8 @@ Introduce authentication and saved user preferences.
 
 Add automated tests with Jest and React Testing Library.
 
-License
+---
+
+## License
+
 This project is open-source and available under the MIT License.
