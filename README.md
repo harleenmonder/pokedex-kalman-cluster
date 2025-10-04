@@ -1,89 +1,147 @@
-PokéStats — Pokémon Data Dashboard
+# PokéStats
 
-A React-based web application that visualizes Pokémon statistics using data from the PokéAPI
-.
-The app demonstrates real-time data smoothing with a Kalman filter and data clustering for visualization.
+PokéStats is a React-based web application that visualizes Pokémon statistics using data from the [PokéAPI](https://pokeapi.co/). It features data filtering, clustering analysis, and a Kalman filter to smooth performance metrics for better visualization and comparison.
 
-How to Run Locally
-1. Prerequisites
+---
 
-Make sure you have the following installed:
+## Table of Contents
+1. [Overview](#overview)
+2. [Architecture](#architecture)
+3. [Features](#features)
+4. [Prerequisites](#prerequisites)
+5. [Installation & Running Locally](#installation--running-locally)
+6. [Testing](#testing)
+7. [How It Works](#how-it-works)
+8. [Tradeoffs and Limitations](#tradeoffs-and-limitations)
+9. [Future Improvements](#future-improvements)
 
-Node.js (v18 or higher)
+---
 
-npm (comes with Node)
+## Overview
+
+This project was built to explore how data science and visualization can enhance user understanding of datasets — in this case, Pokémon statistics. It combines web development (React), data analysis (clustering), and signal processing (Kalman filtering) to provide meaningful, interactive insights.
+
+---
+
+## Architecture
+
+The project is organized as follows:
+
+PokéStats/
+├── src/
+│ ├── components/ # Reusable UI components (charts, cards, tables)
+│ ├── data/ # Data fetching and transformation utilities
+│ ├── hooks/ # Custom React hooks for state and effect management
+│ ├── utils/ # Kalman filter, clustering, and helper functions
+│ ├── App.js # Main application logic
+│ └── index.js # Entry point
+├── public/
+│ └── index.html
+└── package.json
+
+yaml
+Copy code
+
+This clean separation of concerns ensures maintainability and scalability. Components handle display, utilities handle computation, and hooks manage stateful logic.
+
+---
+
+## Features
+
+- Fetches Pokémon data dynamically from the PokéAPI.  
+- Applies a **Kalman filter** to smooth noisy stat data.  
+- Implements **k-means clustering** to group Pokémon by attribute similarity.  
+- Displays interactive charts for comparison.  
+- Allows filtering and searching by Pokémon type.  
+
+---
+
+## Prerequisites
+
+Before running the project, ensure the following are installed:
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- npm or yarn package manager
+- Git (for cloning)
 
 Verify installations:
 
+```bash
 node -v
 npm -v
+git --version
+Installation & Running Locally
+Clone the repository
 
-2. Clone the Repository
-git clone https://github.com/<your-username>/pokedex-kalman-cluster.git
-cd pokedex-kalman-cluster
+bash
+Copy code
+git clone https://github.com/yourusername/pokestats.git
+cd pokestats
+Install dependencies
 
-3. Install Dependencies
+bash
+Copy code
 npm install
+Start the development server
 
-4. Run the App
-npm run dev
+bash
+Copy code
+npm start
+Build for production
 
-
-Then open the URL displayed in your terminal (usually http://localhost:5173/).
-
-5. Build for Production
+bash
+Copy code
 npm run build
+The app will run locally at http://localhost:3000.
 
-What I Built and Why
+Testing
+If tests are added, you can run them with:
 
-PokéStats is designed to explore how real-world data processing techniques like Kalman filtering and clustering can enhance visualization of API-based datasets.
-The project highlights how machine learning and data visualization intersect within front-end development.
+bash
+Copy code
+npm test
 
-Architecture
+---
 
-The project follows a modular React architecture for readability and maintainability:
+## How It Works
 
-PokeStats/
-├── src/
-│   ├── components/        # Reusable UI components (charts, cards, tables)
-│   ├── data/              # Data fetching and transformation utilities
-│   ├── hooks/             # Custom React hooks for managing state and effects
-│   ├── utils/             # Kalman filter, clustering, and helper functions
-│   ├── App.jsx            # Main application logic
-│   └── main.jsx           # Entry point
-├── public/
-│   └── index.html
-└── package.json
+PokéAPI Integration
+The app fetches data directly from the PokéAPI, extracting key attributes such as attack, defense, speed, and type. These values are used as input for the visualization components.
 
-How It Works
+Kalman Filter
+The Kalman filter smooths Pokémon stat data, reducing variance and outliers for more consistent graphs. It is implemented as a helper function in /utils/kalman.js.
 
-PokéAPI Integration:
-The app fetches data for multiple Pokémon, including attributes such as height, weight, and base stats.
+Clustering
+Pokémon are grouped using the k-means clustering algorithm based on selected attributes (e.g., attack, defense, speed). Clusters are visualized through color-coded charts to highlight patterns among Pokémon.
 
-Kalman Filter:
-A lightweight algorithm smooths noisy data (for example, weight variations), simulating real-world sensor data filtering.
+Visualization
+The project uses Recharts for interactive data visualization, including radar and bar charts. Data flows from the API → transformation layer → clustering → visualization components.
 
-Clustering:
-Pokémon are grouped by numerical attributes using a basic K-means–style clustering algorithm.
-The results are visualized using a simple chart to compare relationships among Pokémon.
+---
 
-Visualization:
-The frontend displays the filtered and clustered data in interactive, dynamic charts for intuitive comparison.
+## Tradeoffs and Limitations
 
-Tradeoffs and Limitations
+The PokéAPI limits the number of requests, which can cause delays for larger datasets.
 
-Data Sampling: PokéAPI limits the number of API calls, so large-scale clustering is constrained.
+The Kalman filter assumes consistent data intervals, which may not perfectly fit the API’s variability.
 
-Simplified Kalman Model: Uses a 1D linear Kalman filter for demonstration; not optimized for complex multidimensional data.
+Clustering accuracy is dependent on feature scaling and choice of attributes.
 
-Static Clustering: Clusters are computed on load — no live model retraining.
+Currently, the app runs only on the client side; no backend persistence is implemented.
 
-Performance: Rendering may slow down for very large datasets due to client-side processing.
+---
 
-Future Improvements
+## Future Improvements
 
-Add pagination and advanced filtering options.
+Implement caching for API responses to improve performance.
 
-Implement real-time data updates or live search.
+Add more advanced clustering options (e.g., DBSCAN).
 
-Integrate a more advanced clustering algorithm with adjustable parameters.
+Introduce user authentication and saved preferences.
+
+Add automated testing with Jest and React Testing Library.
+
+---
+
+License
+This project is open-source and available under the MIT License.
