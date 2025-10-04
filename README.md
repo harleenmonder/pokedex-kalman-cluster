@@ -14,7 +14,7 @@ The goal is to combine frontend engineering and basic data-processing concepts i
 
 ---
 
-## How to run locally
+## How to Run Locally
 
 ### Prerequisites
 - Node.js (v18 or later recommended)
@@ -26,7 +26,7 @@ Verify installations:
 node -v
 npm -v
 git --version
-Clone the repository
+Clone the Repository
 Replace <your-username> with your GitHub username or use the repository URL you created.
 
 bash
@@ -39,29 +39,29 @@ bash
 Copy code
 git clone https://github.com/harleenmonder/pokedex-kalman-cluster.git
 cd pokedex-kalman-cluster
-Install dependencies
+Install Dependencies
 bash
 Copy code
 npm install
-Start development server
+Start Development Server
 bash
 Copy code
 npm run dev
 Open the URL shown in the terminal (commonly http://localhost:5173).
 
-Build for production
+Build for Production
 bash
 Copy code
 npm run build
-Preview production build (optional)
+Preview Production Build (optional)
 bash
 Copy code
 npm run preview
 Tests
 No automated tests are included in this version.
 
-What I built & why
-Project purpose
+What I Built & Why
+Project Purpose
 The app demonstrates how a web UI can combine API data with basic analytical techniques:
 
 Provide a friendly interface for exploring Pokémon data.
@@ -98,68 +98,67 @@ App.jsx manages state, coordinates data fetching, and composes components.
 
 index.css contains the layout and card styles.
 
-How it works (data flow)
+How It Works (Data Flow)
 On load, the app requests a list of Pokémon (name + URL) using PokéAPI.
 
 The app prefetches a moderate number of detailed Pokémon records (for clustering) and fetches details for the currently selected Pokémon on demand.
 
 The UI displays the selected Pokémon (sprite, types, height, weight, stats).
 
-The Kalman demo creates a short simulated noisy time series for a selected stat (for example HP) and runs a 1D Kalman filter to produce the smoothed estimate shown on a chart.
+The Kalman demo creates a short simulated noisy time series for a selected stat (e.g., HP) and runs a 1D Kalman filter to produce the smoothed estimate shown on a chart.
 
 The clustering component builds a feature matrix (for example [height, weight] or [stat_total, speed]), normalizes features, runs a simple k-means style algorithm, and visualizes points color-coded by cluster.
 
-How PokéAPI is used
-https://pokeapi.co/api/v2/pokemon?limit=N to get the list of Pokémon (names and detail URLs).
+How PokéAPI Is Used
+https://pokeapi.co/api/v2/pokemon?limit=N retrieves the Pokémon list (names and URLs).
 
-https://pokeapi.co/api/v2/pokemon/{name} to fetch detailed attributes for a chosen Pokémon (stats, sprites, height, weight, types).
+https://pokeapi.co/api/v2/pokemon/{name} fetches detailed attributes (stats, sprites, height, weight, types).
 All fetching is done client-side via fetch() inside src/lib/pokeApi.js.
 
-Where the Kalman filter fits
-PokéAPI returns static attribute values, so the Kalman demo simulates a noisy measurement series (e.g., small random perturbations around the base stat).
+Where the Kalman Filter Fits
+PokéAPI returns static values, so the Kalman demo simulates a noisy measurement series (random perturbations around a base stat).
 
-A simple 1D Kalman filter implementation consumes those noisy observations and produces a smoothed estimate sequence.
+A simple 1D Kalman filter smooths those noisy points.
 
-The chart displays raw noisy points and the Kalman-smoothed line to illustrate how Kalman filtering reduces measurement noise.
+The chart displays both raw and smoothed data to illustrate the effect.
 
-How clustering is done and visualized
-Select numerical features for X and Y (e.g., height vs weight or stat totals).
+How Clustering Is Done and Visualized
+Select numerical features for X and Y (e.g., height vs weight).
 
-Normalize features (min-max or z-score) so dimensions are comparable.
+Normalize features so scales match.
 
-Run a simple K-means style clustering on the normalized data (small N, client-side).
+Run a simple K-means–style clustering.
 
-Visualize clusters on a 2D scatterplot with color-coded points. Clicking or hovering can reveal the Pokémon name or stats (if implemented).
+Visualize clusters on a 2D scatterplot with color-coded points.
 
-Tradeoffs, limitations and future improvements
-Tradeoffs and known limitations
-Simplified algorithms: Kalman filter and clustering are implemented in a simple form to keep the demo readable and easy to understand, not production-grade.
+Tradeoffs, Limitations, and Future Improvements
+Tradeoffs and Known Limitations
+Simplified algorithms: Kalman filter and clustering are intentionally simple for clarity.
 
-API rate limiting: PokéAPI is a public API with rate limits. The app fetches a modest number of details to avoid throttling; you may reduce the prefetch count if you experience slow loading or 429 responses.
+API rate limiting: PokéAPI is public; excessive requests may trigger rate limits.
 
-Client-side only: All processing is done in the browser (no backend). For larger datasets or production use, server-side caching and preprocessing would be needed.
+Client-side only: No backend; performance may degrade with large data.
 
-Clustering sensitivity: K-means requires selecting k and is sensitive to feature scaling and initialization.
+Clustering sensitivity: K-means depends on scaling and initialization.
 
-Future improvements
-Add server-side caching or a simple backend to reduce repeated PokéAPI calls.
+Future Improvements
+Add caching or backend support.
 
-Provide UI controls to select feature normalization and clustering parameters.
+Provide more clustering and normalization options.
 
-Add unit tests for the Kalman and clustering utilities.
+Add tests for Kalman and clustering utilities.
 
-Improve visualizations with interactive charting libraries and better hover/tooltips.
+Improve chart interactivity and tooltips.
 
 Deployment
-Recommended hosts: Vercel or Netlify.
+You can host this project on platforms such as Vercel or Netlify.
 
-Vercel example
+Deploy on Vercel
+Push this repository to GitHub.
 
-Push the repository to GitHub.
+Go to Vercel, import the repository, and deploy (Vite will be auto-detected).
 
-Sign in to Vercel, import the repository, accept defaults (Vite detected).
-
-Deploy and copy the live URL for submission.
+Copy the live deployment URL for sharing or submission.
 
 Author
 Harleen Monder
