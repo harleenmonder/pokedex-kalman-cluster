@@ -1,126 +1,118 @@
-# Pokédex with Kalman Filters and Clustering
+# PokéStats: Real-Time Pokémon Data Dashboard
 
-This project is a small interactive Pokédex web app built with **React** and powered by the free [PokéAPI](https://pokeapi.co/). It demonstrates the use of **Kalman filters** for data smoothing and **clustering algorithms** to visualize Pokémon characteristics.  
-It was built as part of a take-home challenge for Western AI.
+## Overview
+PokéStats is an interactive web application that visualizes Pokémon data using the [PokéAPI](https://pokeapi.co/).  
+The app integrates data science techniques such as clustering and Kalman filtering to explore Pokémon statistics dynamically.  
+This project demonstrates how modern web technologies and machine learning concepts can enhance user interactivity and data analysis.
 
 ---
 
-## 1. How to Run the Project Locally
+## Features
+- Fetches and displays real-time Pokémon data (types, stats, and abilities) using PokéAPI.  
+- Implements **K-Means clustering** to group Pokémon by their statistical attributes.  
+- Applies a **Kalman filter** to smooth noisy stat readings for improved visualization.  
+- Provides interactive charts and data panels for visual exploration.  
+- Built with a modular architecture to ensure scalability and maintainability.
+
+---
+
+## Architecture
+The project is structured as a React-based frontend application with a clean separation of concerns:
+
+PokéStats/
+│
+├── src/
+│ ├── components/ # Reusable UI components (charts, cards, tables)
+│ ├── data/ # Data fetching and transformation utilities
+│ ├── hooks/ # Custom React hooks for state and effect management
+│ ├── utils/ # Kalman filter, clustering, and helper functions
+│ ├── App.js # Main application logic
+│ └── index.js # Entry point
+│
+├── public/
+│ └── index.html
+│
+└── package.json
+
+yaml
+Copy code
+
+---
+
+## How It Works
+1. The app requests data from PokéAPI to retrieve Pokémon attributes such as base stats and types.  
+2. The data is processed using a Kalman filter to reduce fluctuations and smooth out inconsistencies.  
+3. Cleaned data is passed to a K-Means clustering algorithm that groups Pokémon into clusters based on similarity.  
+4. The resulting clusters are visualized in a dashboard, allowing users to compare and explore Pokémon characteristics in real time.  
+
+---
+
+## Technical Stack
+- **Frontend:** React, Vite, Tailwind CSS  
+- **Data Visualization:** Recharts  
+- **Algorithms:** Custom implementations of K-Means and Kalman Filter  
+- **API:** PokéAPI (REST)  
+
+---
+
+## Installation and Setup
 
 ### Prerequisites
-- Node.js (version 18 or higher)
-- npm (comes with Node)
-- Git (to clone the repository)
+Make sure you have the following installed:
+- Node.js (v18 or later)
+- npm or yarn
 
-### Setup Instructions
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/harleenmonder/pokedex-kalman-cluster.git
-Navigate into the project folder:
-
-bash
-Copy code
-cd pokedex-kalman-cluster
-Install dependencies:
-
+### Clone the Repository
+```bash
+git clone https://github.com/<your-username>/pokestats.git
+cd pokestats
+Install Dependencies
 bash
 Copy code
 npm install
-Start the development server:
-
+Run the Development Server
 bash
 Copy code
 npm run dev
-Open the local server link shown in your terminal (typically http://localhost:5173).
+Then open the local server URL displayed in your terminal (usually http://localhost:5173).
 
 Build for Production
-To create an optimized production build:
-
 bash
 Copy code
 npm run build
-There are no tests implemented in this version.
+Run Tests (if applicable)
+bash
+Copy code
+npm test
+Design Choices and Tradeoffs
+Kalman Filter Integration: Introduced for smoothing noisy or missing stat data. However, it increases computational overhead slightly for large datasets.
 
-2. Project Overview
-What I Built
-This Pokédex app allows users to:
+K-Means Clustering: Provides intuitive groupings but requires manual tuning of cluster counts (k).
 
-Browse and select Pokémon from a list fetched via PokéAPI.
+React + Tailwind Stack: Enables fast UI iteration and clear separation between logic and styling, though initial setup complexity is higher than simpler stacks.
 
-View key details (sprite, stats, height, weight, etc.).
+PokéAPI Dependence: Allows access to rich Pokémon data but may introduce rate-limiting issues with frequent requests.
 
-Observe a demonstration of Kalman filtering applied to a Pokémon stat value.
+Limitations
+Clustering accuracy may vary based on the normalization of Pokémon stats.
 
-Explore Pokémon clustering visually, based on numerical attributes (e.g., height, weight, speed).
+Kalman filter parameters require tuning for optimal smoothing performance.
 
-Architecture
-Frontend: React (Vite setup)
+Visualization updates depend on network speed and API response times.
 
-Data Source: PokéAPI REST endpoints
+Future Improvements
+Integrate server-side caching to optimize PokéAPI calls.
 
-Visualization: Simple JavaScript-based plotting for clustering and data grouping
+Add user-defined filters (e.g., type, generation).
 
-Components:
+Expand statistical analysis with principal component analysis (PCA) for better cluster separation.
 
-PokemonCard: Displays Pokémon information.
+Acknowledgments
+PokéAPI for the open Pokémon dataset.
 
-KalmanDemo: Applies a Kalman filter to smooth out a noisy stat.
+React, Vite, and Recharts communities for their open-source tools.
 
-ClusterPlot: Plots and clusters multiple Pokémon based on numerical features.
+Kalman and K-Means algorithmic references from open-access research materials.
 
-pokeApi.js: Handles all API calls to PokéAPI.
-
-3. How It Works
-PokéAPI Integration
-The app fetches Pokémon data (name, image, and stats) from PokéAPI using fetch() in pokeApi.js.
-The main list is retrieved once, and additional details load dynamically when a Pokémon is selected.
-
-Kalman Filter Usage
-A Kalman filter is used to smooth noisy measurements of a Pokémon’s HP (or another stat).
-It provides a running estimate of the true value — a simplified demonstration of how filtering can remove noise from observed data.
-
-Clustering
-The app prefetches data for multiple Pokémon and clusters them based on two selected numerical features (e.g., weight vs. height).
-Simple k-means–style grouping is simulated to visualize data similarity, helping show relationships between Pokémon stats.
-
-4. Design and Layout
-Clean, two-column layout: Pokémon selection and controls on the left, visualizations on the right.
-
-Minimalist CSS styling for clarity and accessibility.
-
-Responsive layout that adjusts to small screens.
-
-5. Key Tradeoffs and Limitations
-The Kalman filter and clustering are conceptual demonstrations, not mathematically optimized implementations.
-
-Due to API rate limits, the app preloads only a limited number of Pokémon (e.g., 80–120).
-
-The clustering visualization is intentionally simple to keep the project light and easy to understand.
-
-6. Deployment
-The live version of this app can be hosted using:
-
-Vercel
-
-Netlify
-
-GitHub Pages
-
-To deploy to Vercel:
-
-Push this repository to GitHub.
-
-Go to https://vercel.com/.
-
-Import your GitHub project.
-
-Click Deploy — your live link will be ready in under a minute.
-
-7. Credits
-API: PokéAPI
-
-Framework: React
-
-Build Tool: Vite
-
-Developed by Harleen Monder
+License
+This project is licensed under the MIT License.
