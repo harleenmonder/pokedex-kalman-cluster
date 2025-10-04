@@ -87,8 +87,8 @@ git --version
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/pokestats.git
-cd pokestats
+git clone https://github.com/harleenmonder/pokedex-kalman-cluster
+cd pokedex-kalman-cluster
 ```
 
 Install dependencies:
