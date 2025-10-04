@@ -1,189 +1,194 @@
 Pokédex with Kalman Filters and Clustering
 Overview
 
-This project is a web-based Pokédex built with React and Vite. It demonstrates front-end development, API integration with the PokéAPI, and basic data processing techniques: a Kalman filter for smoothing noisy values and client-side clustering to visualize groups of Pokémon by numeric attributes.
+This project is a web-based Pokédex built with React and Vite. It demonstrates API integration using the free PokéAPI
+, data smoothing with a Kalman filter, and clustering visualization using client-side data analysis.
 
-How to run locally
+The goal is to combine software engineering fundamentals with basic AI concepts like filtering and pattern grouping — all within a modern front-end project.
+
+How to Run Locally
 Prerequisites
 
-Node.js (v18 or later recommended)
+Before running the project, ensure that you have the following installed:
 
-npm (bundled with Node.js)
+Node.js (v18 or higher recommended)
+
+npm (comes with Node.js)
 
 Git
 
-Verify installations by running the following commands in your terminal (each on its own line):
+To verify installations:
 
 node -v
 npm -v
 git --version
 
-Clone the repository
-
-Replace <your-username> with your GitHub username or the repository URL:
-
+1. Clone the Repository
 git clone https://github.com/<your-username>/pokedex-kalman-cluster.git
 cd pokedex-kalman-cluster
 
 
-Example (if your repo is under your account):
+Replace <your-username> with your GitHub username.
+For example:
 
 git clone https://github.com/harleenmonder/pokedex-kalman-cluster.git
 cd pokedex-kalman-cluster
 
-Install dependencies
+2. Install Dependencies
 npm install
 
-Start the development server
+3. Start the Development Server
 npm run dev
 
 
-Open the URL shown in the terminal (typically http://localhost:5173
-).
+Open the URL shown in your terminal — usually http://localhost:5173.
 
-Build for production
+4. Build for Production
 npm run build
 
-Preview production build (optional)
+5. Preview the Production Build
 npm run preview
 
 Tests
 
-There are no automated tests included in this version.
+There are no automated tests in this version.
 
-What I built and why
+What I Built and Why
 Purpose
 
-The app combines front-end engineering with basic data analysis to provide an interactive way to explore Pokémon data. The goal was to demonstrate:
+This project demonstrates:
 
-API integration (fetching data from an external source),
+Fetching live data from a public REST API (PokéAPI)
 
-a simple Kalman filter to illustrate smoothing of noisy measurements,
+Applying a Kalman filter to smooth noisy signals
 
-client-side clustering to visualize relationships between Pokémon attributes.
+Performing client-side clustering of Pokémon attributes
+
+Displaying all results in an interactive, data-driven web UI
+
+It’s a practical example of combining React development with data visualization and algorithmic reasoning.
 
 Architecture
 
-The project is organized with a component-driven React structure:
+The project follows a modular React structure:
 
-public/
+pokedex-kalman-cluster/
+│
+├── public/
+│   └── index.html
+│
+├── src/
+│   ├── components/
+│   │   ├── PokemonCard.jsx
+│   │   ├── KalmanDemo.jsx
+│   │   └── ClusterPlot.jsx
+│   │
+│   ├── lib/
+│   │   └── pokeApi.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── package.json
+├── vite.config.js
+└── README.md
 
-src/
-
-components/
-
-PokemonCard.jsx
-
-KalmanDemo.jsx
-
-ClusterPlot.jsx
-
-lib/
-
-pokeApi.js
-
-App.jsx
-
-main.jsx
-
-index.css
-
-package.json
-
-README.md
-
-vite.config.js
 
 Roles:
 
-src/components/ contains UI components for display and visualization.
+src/components/ – Reusable visual components
 
-src/lib/pokeApi.js centralizes API calls to PokéAPI.
+src/lib/pokeApi.js – Functions to fetch Pokémon data
 
-App.jsx manages application state, data fetching, and composes child components.
+App.jsx – Main logic and layout
 
-index.css contains layout and styling rules.
+index.css – App-wide styles
 
-How it works (data flow)
+vite.config.js – Vite configuration
 
-On load, the app requests a list of Pokémon (names and URLs) from the PokéAPI.
+How It Works (Data Flow)
 
-The app prefetches a moderate number of detailed Pokémon records for clustering and fetches details for the currently selected Pokémon on demand.
+Pokémon Data Fetching
+The app uses getPokemonList() and getPokemonByName() from pokeApi.js to fetch data from PokéAPI.
 
-The UI displays the selected Pokémon (sprite, types, height, weight, stats).
+Selection and Details
+Users can select a Pokémon from a dropdown to display its stats, image, and type information.
 
-The Kalman demo simulates a short noisy time series around a Pokémon stat (for example HP) and applies a 1D Kalman filter to produce a smoothed estimate.
+Kalman Filter Demo
+The app simulates noisy stat values (like HP) and applies a 1D Kalman filter to show how smoothing works in time-series data.
 
-The clustering component builds a feature matrix from selected numeric attributes (for example [height, weight] or [stat_total, speed]), normalizes features, runs a simple k-means style algorithm, and visualizes clusters on a 2D scatterplot with color coding.
+Clustering Visualization
+A simple k-means–style clustering algorithm groups Pokémon based on two chosen features (e.g., weight vs. height).
+The results are plotted as a 2D scatterplot with color-coded clusters.
 
-How PokéAPI is used
+How PokéAPI Is Used
 
-To retrieve the list of Pokémon:
+List endpoint:
+https://pokeapi.co/api/v2/pokemon?limit=N
+Returns names and URLs for Pokémon.
 
-https://pokeapi.co/api/v2/pokemon?limit=N (returns names and detail URLs)
+Detail endpoint:
+https://pokeapi.co/api/v2/pokemon/{name}
+Returns height, weight, stats, and sprite images.
 
-To fetch details for a single Pokémon:
+All fetches are handled inside pokeApi.js using native fetch().
 
-https://pokeapi.co/api/v2/pokemon/{name} (returns stats, sprites, height, weight, types)
-All fetches are performed client-side via fetch() in src/lib/pokeApi.js.
+Where the Kalman Filter Fits
 
-Where the Kalman filter fits
+The PokéAPI provides static data, so a synthetic noisy signal is created from a Pokémon’s base stat (e.g., HP).
 
-PokéAPI provides static attribute values; to demonstrate Kalman filtering, the app generates a simulated noisy measurement series by perturbing a base stat (e.g., HP).
+A simple Kalman filter implementation estimates the “true” underlying stat over time.
 
-A simple 1D Kalman filter consumes these noisy observations and outputs smoothed estimates.
+The output shows a clear visual difference between noisy data and filtered estimates.
 
-The visualization shows the raw noisy points and the Kalman-filtered line so reviewers can clearly see the smoothing effect.
+How Clustering Works and Is Visualized
 
-How clustering is done and visualized
+Pokémon are represented as numeric vectors of features (height, weight, or combined stat totals).
 
-The app constructs a numeric feature vector for each Pokémon using selected attributes (e.g., height, weight, total stats).
+Data is normalized before clustering for fair distance comparison.
 
-Features are normalized (min-max or z-score) to make dimensions comparable.
+A k-means–like algorithm assigns Pokémon to clusters.
 
-A basic K-means style clustering algorithm runs client-side on the normalized data (small N).
+Results are displayed on a scatterplot with each cluster assigned a color.
 
-Results are displayed on a 2D scatter plot with points color-coded by cluster. Hover or click can reveal the Pokémon name and attributes (if implemented).
+Tradeoffs and Limitations
 
-Tradeoffs and limitations
+Kalman filtering and clustering are simplified for clarity, not optimized for performance.
 
-The Kalman filter and clustering implementations are intentionally simplified for clarity and educational purposes, not performance or production accuracy.
+PokéAPI is rate-limited; loading too many Pokémon at once may trigger slowdowns or 429 errors.
 
-PokéAPI is a public API and may impose rate limits; the app prefetches a limited number of Pokémon to reduce request load. If you see slow loading or HTTP 429 responses, reduce the prefetch count.
+All computation is client-side, so large datasets may reduce browser performance.
 
-All computation is client-side; processing many Pokémon will increase memory and CPU use in the browser.
+The number of clusters k is fixed; future improvements could let users choose k.
 
-K-means requires choosing the number of clusters k and is sensitive to feature scaling and initialization.
+Future Improvements
 
-Future improvements
+Add caching or backend support to reduce API load
 
-Add server-side caching or a small backend to reduce repeated PokéAPI calls.
+Allow user selection of normalization and clustering parameters
 
-Provide UI controls for normalization and clustering parameters (normalization method, k selection).
+Include unit tests for Kalman and clustering logic
 
-Add automated unit tests for Kalman and clustering utilities.
-
-Improve visualizations (interactive tooltips, zooming, selectable axes).
+Enhance visualizations with tooltips and interactivity
 
 Deployment
+Deploying to Vercel
 
-Recommended hosts: Vercel or Netlify.
+Push this repository to GitHub.
 
-Vercel example:
+Go to Vercel
+, log in, and import your repository.
 
-Push the repository to GitHub.
+Accept default settings (Vite is auto-detected).
 
-Go to vercel.com and import the repository.
-
-Accept defaults (Vite is detected) and deploy.
-
-Copy the live URL for submission.
+Once deployed, copy the live URL for submission.
 
 Author
 
 Harleen Monder
-First-year Computer Science student
+First-Year Computer Science Student, Western University
 
 License
 
-MIT License
+This project is released under the MIT License.
