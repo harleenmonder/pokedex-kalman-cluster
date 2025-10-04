@@ -30,7 +30,7 @@ This project explores how data science and visualization can enhance understandi
 Project structure:
 
 ```text
-PokéStats/
+pokedex-kalman-cluster/
 ├── src/
 │   ├── components/           # Reusable UI components (charts, cards, tables)
 │   ├── data/                 # Data fetching and transformation utilities
@@ -60,6 +60,7 @@ This separation of concerns keeps the app maintainable and scalable: components 
 - Allows filtering and searching by Pokémon type.
 
 Prerequisites
+
 Please install:
 
 ```bash
@@ -108,6 +109,7 @@ The app will run locally at http://localhost:3000.
 ```
 
 Testing
+
 If tests are added, run them with:
 
 ```bash
@@ -124,7 +126,7 @@ yarn test
     - The app fetches data directly from the PokéAPI, extracting key attributes such as attack, defense, speed, and type. These values feed the visualization components.
 
 - Kalman Filter
-    - A 1-D Kalman filter smooths Pokémon stat data, reducing variance and outliers for more consistent graphs. It is implemented as a helper in src/utils/kalman.js.
+    - A 1-D Kalman filter smooths Pokémon stat data, reducing variance and outliers for more consistent graphs. It is implemented as a helper in src/lib/kalman.js.
 
 - Clustering
     - Pokémon are grouped using the k-means clustering algorithm based on selected attributes (e.g., attack, defense, speed). Clusters are visualized with color-coded charts to highlight patterns.
