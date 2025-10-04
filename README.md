@@ -49,15 +49,15 @@ This separation of concerns keeps the app maintainable and scalable: components 
 
 ## Features
 
-Fetches Pokémon data dynamically from the PokéAPI.
+- Fetches Pokémon data dynamically from the PokéAPI.
 
-Applies a Kalman filter to smooth noisy stat data.
+- Applies a Kalman filter to smooth noisy stat data.
 
-Implements k-means clustering to group Pokémon by attribute similarity.
+- Implements k-means clustering to group Pokémon by attribute similarity.
 
-Displays interactive charts for comparison (using Recharts).
+- Displays interactive charts for comparison (using Recharts).
 
-Allows filtering and searching by Pokémon type.
+- Allows filtering and searching by Pokémon type.
 
 Prerequisites
 Please install:
@@ -69,54 +69,48 @@ npm or Yarn
 
 Git
 ```
+
 Verify installations:
 
 ```bash
-Code kopieren
 node -v
 npm -v
 git --version
 Installation & Running Locally
 Clone the repository:
-```
-
-```bash
-Code kopieren
 git clone https://github.com/yourusername/pokestats.git
 cd pokestats
-Install dependencies:
 ```
 
+Install dependencies:
+
 ```bash
-Code kopieren
 npm install
 # or
 yarn
-Start the development server:
 ```
 
+Start the development server:
+
 ```bash
-Code kopieren
 npm start
 # or
 yarn start
-Build for production:
 ```
 
+Build for production:
+
 ```bash
-Code kopieren
 npm run build
 # or
 yarn build
 The app will run locally at http://localhost:3000.
+```
 
 Testing
 If tests are added, run them with:
-```
 
 ```bash
-
-Code kopieren
 npm test
 # or
 yarn test
@@ -126,40 +120,40 @@ yarn test
 
 ## How It Works
 
-PokéAPI Integration
-The app fetches data directly from the PokéAPI, extracting key attributes such as attack, defense, speed, and type. These values feed the visualization components.
+- PokéAPI Integration
+    - The app fetches data directly from the PokéAPI, extracting key attributes such as attack, defense, speed, and type. These values feed the visualization components.
 
-Kalman Filter
-A 1-D Kalman filter smooths Pokémon stat data, reducing variance and outliers for more consistent graphs. It is implemented as a helper in src/utils/kalman.js.
+- Kalman Filter
+    - A 1-D Kalman filter smooths Pokémon stat data, reducing variance and outliers for more consistent graphs. It is implemented as a helper in src/utils/kalman.js.
 
-Clustering
-Pokémon are grouped using the k-means clustering algorithm based on selected attributes (e.g., attack, defense, speed). Clusters are visualized with color-coded charts to highlight patterns.
+- Clustering
+    - Pokémon are grouped using the k-means clustering algorithm based on selected attributes (e.g., attack, defense, speed). Clusters are visualized with color-coded charts to highlight patterns.
 
-Visualization
-The project uses Recharts for interactive data visualization (e.g., radar and bar charts). Data flow: API → transformation → clustering → visualization components.
+- Visualization
+    - The project uses Recharts for interactive data visualization (e.g., radar and bar charts). Data flow: API → transformation → clustering → visualization components.
 
 ---
 
 ## Tradeoffs and Limitations
 
-PokéAPI rate limits can slow large fetches.
+- PokéAPI rate limits can slow large fetches.
 
-The Kalman filter assumes consistent sampling intervals, which may not perfectly match API realities.
+- The Kalman filter assumes consistent sampling intervals, which may not perfectly match API realities.
 
-Clustering quality depends on feature selection and scaling.
+- Clustering quality depends on feature selection and scaling.
 
-Client-only app; there is no backend persistence.
+- Client-only app; there is no backend persistence.
 
 ---
 
 ## Future Improvements
-Cache API responses for better performance.
+- Cache API responses for better performance.
 
-Add alternative clustering methods (e.g., DBSCAN).
+- Add alternative clustering methods (e.g., DBSCAN).
 
-Introduce authentication and saved user preferences.
+- Introduce authentication and saved user preferences.
 
-Add automated tests with Jest and React Testing Library.
+- Add automated tests with Jest and React Testing Library.
 
 ---
 
