@@ -1,80 +1,79 @@
-# Pokédex with Kalman Filters and Clustering
+Pokédex with Kalman Filters and Clustering
+Overview
 
-## Overview
-This project is a Pokédex web application built with React and Vite that demonstrates data smoothing with a Kalman filter and simple clustering visualization using Pokémon data from the PokéAPI.  
+This project is a Pokédex web application built with React and Vite that demonstrates data smoothing with a Kalman filter and simple clustering visualization using Pokémon data from the PokéAPI.
 The goal is to combine frontend engineering and basic data-processing concepts in a single interactive demo.
 
----
+Contents
 
-## Contents
+How to run locally (prereqs, install, start/build, tests)
 
-- How to run locally (prereqs, install, start/build, tests)
-- What I built and why (architecture, how it works, how PokéAPI is used, where Kalman fits, clustering details)
-- Tradeoffs, limitations and future improvements
+What I built and why (architecture, how it works, how PokéAPI is used, where Kalman fits, clustering details)
 
----
+Tradeoffs, limitations, and future improvements
 
-## How to Run Locally
+How to Run Locally
+Prerequisites
 
-### Prerequisites
-- Node.js (v18 or later recommended)
-- npm (bundled with Node.js)
-- Git (for cloning and pushing)
+Node.js (v18 or later recommended)
+
+npm (bundled with Node.js)
+
+Git (for cloning and pushing)
 
 Verify installations:
-```bash
+
 node -v
 npm -v
 git --version
-Clone the Repository
-Replace <your-username> with your GitHub username or use the repository URL you created.
 
-bash
-Copy code
+Clone the Repository
+
+Replace <your-username> with your GitHub username or use the repository URL you created:
+
 git clone https://github.com/<your-username>/pokedex-kalman-cluster.git
 cd pokedex-kalman-cluster
+
+
 Example:
 
-bash
-Copy code
 git clone https://github.com/harleenmonder/pokedex-kalman-cluster.git
 cd pokedex-kalman-cluster
+
 Install Dependencies
-bash
-Copy code
 npm install
+
 Start Development Server
-bash
-Copy code
 npm run dev
-Open the URL shown in the terminal (commonly http://localhost:5173).
+
+
+Then open the URL shown in the terminal (commonly http://localhost:5173).
 
 Build for Production
-bash
-Copy code
 npm run build
+
 Preview Production Build (optional)
-bash
-Copy code
 npm run preview
+
 Tests
+
 No automated tests are included in this version.
 
 What I Built & Why
 Project Purpose
-The app demonstrates how a web UI can combine API data with basic analytical techniques:
 
-Provide a friendly interface for exploring Pokémon data.
+The app demonstrates how a web UI can combine API data with analytical techniques:
 
-Demonstrate a Kalman filter for smoothing noisy observations.
+Provides an interactive interface for exploring Pokémon data.
 
-Visualize clustering to group Pokémon by numeric features.
+Demonstrates a Kalman filter for smoothing noisy observations.
+
+Visualizes clustering to group Pokémon by numerical features.
 
 Architecture
-The project follows a component-based React structure with clear separation of concerns.
 
-pgsql
-Copy code
+The project follows a component-based React structure with a clear separation of concerns.
+
 pokedex-kalman-cluster/
 ├── public/
 ├── src/
@@ -90,79 +89,95 @@ pokedex-kalman-cluster/
 ├── package.json
 ├── README.md
 └── vite.config.js
-src/components/ contains the UI components for the Pokémon card, Kalman demo, and clustering plot.
 
-src/lib/pokeApi.js centralizes PokéAPI fetch logic.
 
-App.jsx manages state, coordinates data fetching, and composes components.
+Breakdown:
 
-index.css contains the layout and card styles.
+src/components/ — UI components for the Pokémon card, Kalman demo, and clustering plot.
+
+src/lib/pokeApi.js — Centralized PokéAPI fetch logic.
+
+App.jsx — Main logic: state management, data fetching, component composition.
+
+index.css — Layout and card styles.
 
 How It Works (Data Flow)
-On load, the app requests a list of Pokémon (name + URL) using PokéAPI.
 
-The app prefetches a moderate number of detailed Pokémon records (for clustering) and fetches details for the currently selected Pokémon on demand.
+On load, the app requests a Pokémon list (name + URL) using PokéAPI.
 
-The UI displays the selected Pokémon (sprite, types, height, weight, stats).
+Prefetches detailed Pokémon records (for clustering) and fetches details for the selected Pokémon.
 
-The Kalman demo creates a short simulated noisy time series for a selected stat (e.g., HP) and runs a 1D Kalman filter to produce the smoothed estimate shown on a chart.
+Displays Pokémon attributes (sprite, types, height, weight, stats).
 
-The clustering component builds a feature matrix (for example [height, weight] or [stat_total, speed]), normalizes features, runs a simple k-means style algorithm, and visualizes points color-coded by cluster.
+The Kalman demo simulates noisy stat data (e.g., HP) and applies a 1D Kalman filter to smooth it.
+
+The clustering component normalizes features (e.g., height vs weight), applies a simple k-means clustering, and visualizes points color-coded by cluster.
 
 How PokéAPI Is Used
-https://pokeapi.co/api/v2/pokemon?limit=N retrieves the Pokémon list (names and URLs).
+
+https://pokeapi.co/api/v2/pokemon?limit=N retrieves the Pokémon list.
 
 https://pokeapi.co/api/v2/pokemon/{name} fetches detailed attributes (stats, sprites, height, weight, types).
-All fetching is done client-side via fetch() inside src/lib/pokeApi.js.
+
+All data fetching is done client-side through fetch() in src/lib/pokeApi.js.
 
 Where the Kalman Filter Fits
-PokéAPI returns static values, so the Kalman demo simulates a noisy measurement series (random perturbations around a base stat).
 
-A simple 1D Kalman filter smooths those noisy points.
+PokéAPI provides static data, so the Kalman demo simulates a noisy series around a Pokémon’s base stat.
 
-The chart displays both raw and smoothed data to illustrate the effect.
+A 1D Kalman filter smooths that simulated data to illustrate noise reduction.
+
+The chart shows both raw and filtered values for comparison.
 
 How Clustering Is Done and Visualized
-Select numerical features for X and Y (e.g., height vs weight).
 
-Normalize features so scales match.
+Choose X and Y numeric features (e.g., height vs weight).
 
-Run a simple K-means–style clustering.
+Normalize the data for scale consistency.
 
-Visualize clusters on a 2D scatterplot with color-coded points.
+Apply a simple K-means–style clustering.
+
+Display results on a 2D scatterplot with color-coded clusters.
 
 Tradeoffs, Limitations, and Future Improvements
-Tradeoffs and Known Limitations
-Simplified algorithms: Kalman filter and clustering are intentionally simple for clarity.
+Tradeoffs & Known Limitations
 
-API rate limiting: PokéAPI is public; excessive requests may trigger rate limits.
+Simplified algorithms: Both Kalman filter and clustering are simplified for educational clarity.
 
-Client-side only: No backend; performance may degrade with large data.
+Public API: Heavy use can trigger PokéAPI rate limits.
 
-Clustering sensitivity: K-means depends on scaling and initialization.
+Client-side only: No backend means performance decreases with many data points.
+
+K-means sensitivity: Cluster quality varies by initialization and scaling.
 
 Future Improvements
-Add caching or backend support.
 
-Provide more clustering and normalization options.
+Add local caching or backend data storage.
 
-Add tests for Kalman and clustering utilities.
+Expand clustering features and normalization options.
 
-Improve chart interactivity and tooltips.
+Add test coverage for Kalman and clustering utilities.
+
+Improve interactivity and chart visualization.
 
 Deployment
-You can host this project on platforms such as Vercel or Netlify.
+
+You can host this project on Vercel, Netlify, or GitHub Pages.
 
 Deploy on Vercel
-Push this repository to GitHub.
 
-Go to Vercel, import the repository, and deploy (Vite will be auto-detected).
+Push your repository to GitHub.
 
-Copy the live deployment URL for sharing or submission.
+Go to Vercel
+, import the repository, and deploy (Vite will be detected automatically).
+
+Copy the live deployment link for submission.
 
 Author
+
 Harleen Monder
-First-year Computer Science student
+First-Year Computer Science Student
 
 License
+
 MIT License
