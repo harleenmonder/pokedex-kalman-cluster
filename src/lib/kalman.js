@@ -1,4 +1,4 @@
-// Simple 1D Kalman filter
+// 1D Kalman filter
 // observations: array of numbers
 // options: R (measurement variance), Q (process variance), initialEstimate, initialError
 export function kalman1D(observations, { R = 4, Q = 1, initialEstimate = null, initialError = 1 } = {}) {

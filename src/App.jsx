@@ -14,7 +14,7 @@ export default function App() {
 
   useEffect(() => {
     getPokemonList(120).then(res => setList(res)).catch(err => console.error(err));
-    // prefetch a modest number for clustering (avoid 150 to reduce requests)
+    // prefetch a modest number for clustering
     (async () => {
       try {
         const namesRes = await getPokemonList(80);
