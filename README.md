@@ -59,17 +59,17 @@ This separation of concerns keeps the app maintainable and scalable: components 
 
 - Allows filtering and searching by Pokémon type.
 
+
 Prerequisites
 
 Please install:
 
-```bash
-Node.js (v18 or higher)
 
-npm or Yarn
+- Node.js (v18 or higher)
 
-Git
-```
+- npm or Yarn
+
+- Git
 
 Verify installations:
 
@@ -77,8 +77,12 @@ Verify installations:
 node -v
 npm -v
 git --version
+```
+
 Installation & Running Locally
 Clone the repository:
+
+```bash
 git clone https://github.com/yourusername/pokestats.git
 cd pokestats
 ```
@@ -105,8 +109,10 @@ Build for production:
 npm run build
 # or
 yarn build
-The app will run locally at http://localhost:3000.
 ```
+
+The app will run locally at http://localhost:5173.
+
 
 Testing
 
