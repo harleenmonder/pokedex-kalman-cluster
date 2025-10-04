@@ -1,183 +1,131 @@
-Pokédex with Kalman Filters and Clustering
-Overview
+# PokéStats
 
-This project is a Pokédex web application built with React and Vite that demonstrates data smoothing with a Kalman filter and simple clustering visualization using Pokémon data from the PokéAPI.
-The goal is to combine frontend engineering and basic data-processing concepts in a single interactive demo.
+PokéStats is a React-based web application that visualizes Pokémon statistics using data from the [PokéAPI](https://pokeapi.co/). It features data filtering, clustering analysis, and a Kalman filter to smooth performance metrics for better visualization and comparison.
 
-Contents
+---
 
-How to run locally (prereqs, install, start/build, tests)
+## Table of Contents
+1. [Overview](#overview)
+2. [Architecture](#architecture)
+3. [Features](#features)
+4. [Prerequisites](#prerequisites)
+5. [Installation & Running Locally](#installation--running-locally)
+6. [Testing](#testing)
+7. [How It Works](#how-it-works)
+8. [Tradeoffs and Limitations](#tradeoffs-and-limitations)
+9. [Future Improvements](#future-improvements)
 
-What I built and why (architecture, how it works, how PokéAPI is used, where Kalman fits, clustering details)
+---
 
-Tradeoffs, limitations, and future improvements
+## Overview
+This project was built to explore how data science and visualization can enhance user understanding of datasets — in this case, Pokémon statistics. It combines web development (React), data analysis (clustering), and signal processing (Kalman filtering) to provide meaningful, interactive insights.
 
-How to Run Locally
-Prerequisites
+---
 
-Node.js (v18 or later recommended)
+## Architecture
 
-npm (bundled with Node.js)
+The project is organized as follows:
 
-Git (for cloning and pushing)
+PokéStats/
+├── src/
+│ ├── components/ # Reusable UI components (charts, cards, tables)
+│ ├── data/ # Data fetching and transformation utilities
+│ ├── hooks/ # Custom React hooks for state and effect management
+│ ├── utils/ # Kalman filter, clustering, and helper functions
+│ ├── App.js # Main application logic
+│ └── index.js # Entry point
+├── public/
+│ └── index.html
+└── package.json
+
+yaml
+Copy code
+
+This clean separation of concerns ensures maintainability and scalability. Components handle display, utilities handle computation, and hooks manage stateful logic.
+
+---
+
+## Features
+- Fetches Pokémon data dynamically from the PokéAPI.
+- Applies a **Kalman filter** to smooth noisy stat data.
+- Implements **k-means clustering** to group Pokémon by attribute similarity.
+- Displays interactive charts for comparison.
+- Allows filtering and searching by Pokémon type.
+
+---
+
+## Prerequisites
+Before running the project, ensure the following are installed:
+
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- npm or yarn package manager
+- Git (for cloning)
 
 Verify installations:
-
+```bash
 node -v
 npm -v
 git --version
+Installation & Running Locally
+Clone the repository
 
-Clone the Repository
+bash
+Copy code
+git clone https://github.com/yourusername/pokestats.git
+cd pokestats
+Install dependencies
 
-Replace <your-username> with your GitHub username or use the repository URL you created:
-
-git clone https://github.com/<your-username>/pokedex-kalman-cluster.git
-cd pokedex-kalman-cluster
-
-
-Example:
-
-git clone https://github.com/harleenmonder/pokedex-kalman-cluster.git
-cd pokedex-kalman-cluster
-
-Install Dependencies
+bash
+Copy code
 npm install
+Start the development server
 
-Start Development Server
-npm run dev
+bash
+Copy code
+npm start
+Build for production
 
-
-Then open the URL shown in the terminal (commonly http://localhost:5173).
-
-Build for Production
+bash
+Copy code
 npm run build
+The app will run locally at http://localhost:3000.
 
-Preview Production Build (optional)
-npm run preview
+Testing
+If tests are added, you can run them with:
 
-Tests
+bash
+Copy code
+npm test
+How It Works
+PokéAPI Integration
+The app fetches data directly from the PokéAPI, extracting key attributes such as attack, defense, speed, and type. These values are used as input for the visualization components.
 
-No automated tests are included in this version.
+Kalman Filter
+The Kalman filter smooths Pokémon stat data, reducing variance and outliers for more consistent graphs. It is implemented as a helper function in /utils/kalman.js.
 
-What I Built & Why
-Project Purpose
+Clustering
+Pokémon are grouped using the k-means clustering algorithm based on selected attributes (e.g., attack, defense, speed). Clusters are visualized through color-coded charts to highlight patterns among Pokémon.
 
-The app demonstrates how a web UI can combine API data with analytical techniques:
+Visualization
+The project uses Recharts for interactive data visualization, including radar and bar charts. Data flows from the API → transformation layer → clustering → visualization components.
 
-Provides an interactive interface for exploring Pokémon data.
+Tradeoffs and Limitations
+The PokéAPI limits the number of requests, which can cause delays for larger datasets.
 
-Demonstrates a Kalman filter for smoothing noisy observations.
+The Kalman filter assumes consistent data intervals, which may not perfectly fit the API’s variability.
 
-Visualizes clustering to group Pokémon by numerical features.
+Clustering accuracy is dependent on feature scaling and choice of attributes.
 
-Architecture
-
-The project follows a component-based React structure with a clear separation of concerns.
-
-pokedex-kalman-cluster/
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── PokemonCard.jsx
-│   │   ├── KalmanDemo.jsx
-│   │   └── ClusterPlot.jsx
-│   ├── lib/
-│   │   └── pokeApi.js
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-├── package.json
-├── README.md
-└── vite.config.js
-
-
-Breakdown:
-
-src/components/ — UI components for the Pokémon card, Kalman demo, and clustering plot.
-
-src/lib/pokeApi.js — Centralized PokéAPI fetch logic.
-
-App.jsx — Main logic: state management, data fetching, component composition.
-
-index.css — Layout and card styles.
-
-How It Works (Data Flow)
-
-On load, the app requests a Pokémon list (name + URL) using PokéAPI.
-
-Prefetches detailed Pokémon records (for clustering) and fetches details for the selected Pokémon.
-
-Displays Pokémon attributes (sprite, types, height, weight, stats).
-
-The Kalman demo simulates noisy stat data (e.g., HP) and applies a 1D Kalman filter to smooth it.
-
-The clustering component normalizes features (e.g., height vs weight), applies a simple k-means clustering, and visualizes points color-coded by cluster.
-
-How PokéAPI Is Used
-
-https://pokeapi.co/api/v2/pokemon?limit=N retrieves the Pokémon list.
-
-https://pokeapi.co/api/v2/pokemon/{name} fetches detailed attributes (stats, sprites, height, weight, types).
-
-All data fetching is done client-side through fetch() in src/lib/pokeApi.js.
-
-Where the Kalman Filter Fits
-
-PokéAPI provides static data, so the Kalman demo simulates a noisy series around a Pokémon’s base stat.
-
-A 1D Kalman filter smooths that simulated data to illustrate noise reduction.
-
-The chart shows both raw and filtered values for comparison.
-
-How Clustering Is Done and Visualized
-
-Choose X and Y numeric features (e.g., height vs weight).
-
-Normalize the data for scale consistency.
-
-Apply a simple K-means–style clustering.
-
-Display results on a 2D scatterplot with color-coded clusters.
-
-Tradeoffs, Limitations, and Future Improvements
-Tradeoffs & Known Limitations
-
-Simplified algorithms: Both Kalman filter and clustering are simplified for educational clarity.
-
-Public API: Heavy use can trigger PokéAPI rate limits.
-
-Client-side only: No backend means performance decreases with many data points.
-
-K-means sensitivity: Cluster quality varies by initialization and scaling.
+Currently, the app runs only on the client side; no backend persistence is implemented.
 
 Future Improvements
+Implement caching for API responses to improve performance.
 
-Add local caching or backend data storage.
+Add more advanced clustering options (e.g., DBSCAN).
 
-Expand clustering features and normalization options.
+Introduce user authentication and saved preferences.
 
-Add test coverage for Kalman and clustering utilities.
-
-Improve interactivity and chart visualization.
-
-Deployment
-
-You can host this project on Vercel, Netlify, or GitHub Pages.
-
-Deploy on Vercel
-
-Push your repository to GitHub.
-
-Go to Vercel
-, import the repository, and deploy (Vite will be detected automatically).
-
-Copy the live deployment link for submission.
-
-Author
-
-Harleen Monder
-First-Year Computer Science Student
+Add automated testing with Jest and React Testing Library.
 
 License
-
-MIT License
+This project is open-source and available under the MIT License.
