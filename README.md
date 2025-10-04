@@ -59,8 +59,9 @@ This separation of concerns keeps the app maintainable and scalable: components 
 
 - Allows filtering and searching by Pokémon type.
 
+---
 
-Prerequisites
+## Prerequisites
 
 Please install:
 
@@ -79,7 +80,10 @@ npm -v
 git --version
 ```
 
-Installation & Running Locally
+---
+
+## Installation & Running Locally
+
 Clone the repository:
 
 ```bash
@@ -113,8 +117,9 @@ yarn build
 
 The app will run locally at http://localhost:5173.
 
+---
 
-Testing
+## Testing
 
 If tests are added, run them with:
 
