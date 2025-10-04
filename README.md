@@ -18,6 +18,7 @@ PokéStats is a React-based web application that visualizes Pokémon statistics 
 ---
 
 ## Overview
+
 This project was built to explore how data science and visualization can enhance user understanding of datasets — in this case, Pokémon statistics. It combines web development (React), data analysis (clustering), and signal processing (Kalman filtering) to provide meaningful, interactive insights.
 
 ---
@@ -46,15 +47,17 @@ This clean separation of concerns ensures maintainability and scalability. Compo
 ---
 
 ## Features
-- Fetches Pokémon data dynamically from the PokéAPI.
-- Applies a **Kalman filter** to smooth noisy stat data.
-- Implements **k-means clustering** to group Pokémon by attribute similarity.
-- Displays interactive charts for comparison.
-- Allows filtering and searching by Pokémon type.
+
+- Fetches Pokémon data dynamically from the PokéAPI.  
+- Applies a **Kalman filter** to smooth noisy stat data.  
+- Implements **k-means clustering** to group Pokémon by attribute similarity.  
+- Displays interactive charts for comparison.  
+- Allows filtering and searching by Pokémon type.  
 
 ---
 
 ## Prerequisites
+
 Before running the project, ensure the following are installed:
 
 - [Node.js](https://nodejs.org/) (v18 or higher)
@@ -62,6 +65,7 @@ Before running the project, ensure the following are installed:
 - Git (for cloning)
 
 Verify installations:
+
 ```bash
 node -v
 npm -v
