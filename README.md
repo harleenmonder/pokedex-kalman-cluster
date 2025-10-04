@@ -1,6 +1,6 @@
-# PokéStats
+# Pokédex Kalman Cluster
 
-PokéStats is a React-based web application that visualizes Pokémon statistics using data from the [PokéAPI](https://pokeapi.co/). It features data filtering, clustering analysis, and a Kalman filter to smooth performance metrics for better visualization and comparison.
+Pokédex Kalman Cluster is a React-based web application that visualizes Pokémon statistics using data from the [PokéAPI](https://pokeapi.co/). It features data filtering, clustering analysis, and a Kalman filter to smooth performance metrics for better visualization and comparison.
 
 ---
 
